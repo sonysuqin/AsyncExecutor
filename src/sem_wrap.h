@@ -1,5 +1,5 @@
-﻿#ifndef __SEMAPHORE_H__
-#define __SEMAPHORE_H__
+﻿#ifndef __SEM_WRAP_H__
+#define __SEM_WRAP_H__
 
 #ifdef WIN32
 #ifndef WIN32_LEAN_AND_MEAN
@@ -99,4 +99,4 @@ inline bool Semaphore::Wait(int timeout) {
 
 }  // namespace qrtc
 
-#endif  // __SEMAPHORE_H__
+#endif  // __SEM_WRAP_H__
