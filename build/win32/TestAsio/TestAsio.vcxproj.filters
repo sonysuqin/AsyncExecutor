@@ -13,30 +13,30 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="src">
-      <UniqueIdentifier>{f2492be3-a249-43e2-a5b6-857b6e8ee678}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\example\test.cpp">
+    <ClCompile Include="TestAsio.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\executor.cpp">
-      <Filter>src</Filter>
+    <ClCompile Include="..\..\..\src\io_service.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\asio_timer.cpp">
+      <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\src\function_view.h">
-      <Filter>src</Filter>
+      <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\safe_queue.h">
-      <Filter>src</Filter>
+    <ClInclude Include="..\..\..\src\io_service.h">
+      <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\sem_wrap.h">
-      <Filter>src</Filter>
+    <ClInclude Include="..\..\..\src\timer.h">
+      <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\executor.h">
-      <Filter>src</Filter>
+    <ClInclude Include="..\..\..\src\asio_timer.h">
+      <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -34,7 +34,7 @@
 // copyable, so it's probably cheaper to pass it by value than by const
 // reference.
 
-namespace qrtc {
+namespace bee {
 
 template <typename T>
 class FunctionView;  // Undefined.
@@ -124,6 +124,6 @@ class FunctionView<RetT(ArgT...)> final {
   RetT (*call_)(VoidUnion, ArgT...);
 };
 
-}  // namespace qrtc
+}  // namespace bee
 
 #endif  // API_FUNCTION_VIEW_H_
