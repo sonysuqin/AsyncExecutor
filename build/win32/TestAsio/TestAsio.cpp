@@ -3,6 +3,9 @@
 #include <iostream>
 #include <sstream>
 #include <string>
+#include <thread>
+#include <chrono>
+#include <stdio.h>
 
 #include "io_service.h"
 
@@ -55,29 +58,41 @@ class Test {
   int fun3() { return 3; }
 };
 
+void test2() {
+  printf("test2\n");
+}
+
+void test1() {
+  printf("test1\n");
+  executor->PostTask(std::bind(&test2));
+}
+
 int main() {
   printf("[Main:%ld] Main thread.\n", GetTid());
-  executor->Start();
+  while (1) {
+    executor->Start();
+    printf("started\n");
+    getchar();
+    int count = 100;
+    int index = 0;
+    Test t;
+    while (index++ < count) {
+      printf("[Main:%ld] PostTask fun1().\n", GetTid());
+      executor->PostTask(std::bind(&Test::fun1, &t));
+      printf("[Main:%ld] Invoke fun2().\n", GetTid());
+      int i = executor->Invoke<int>([&t] { return t.fun2(); });
+      printf("[Main:%ld] Invoke fun2() return %d\n", GetTid(), i);
+      printf("Test %d\n", index);
+    }
 
-  int count = 100;
-  int index = 0;
-  Test t;
-  while (index++ < count) {
-    printf("[Main:%ld] PostTask fun1().\n", GetTid());
-    executor->PostTask(std::bind(&Test::fun1, &t));
-    printf("[Main:%ld] Invoke fun2().\n", GetTid());
-    int i = executor->Invoke<int>([&t] { return t.fun2(); });
-    printf("[Main:%ld] Invoke fun2() return %d\n", GetTid(), i);
-    printf("Test %d\n", index);
+    uint64_t timer = executor->OpenTimer(
+        100, true, [] { printf("[Exector:%ld] haha\n", GetTid()); });
+
+    executor->Invoke<void>(std::bind(&test1));
+    getchar();
+    executor->Stop();
+    printf("stopped\n");
+    getchar();
   }
-
-  std::shared_ptr<bee::Timer> timer = executor->CreateTimer();
-  timer->Open(1000, true, [] { printf("[Exector:%ld] haha\n", GetTid()); });
-  getchar();
-  timer->Close();
-  timer.reset();
-  executor->Stop();
-  delete executor;
-  getchar();
   return 0;
 }

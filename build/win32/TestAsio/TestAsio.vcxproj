@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="..\..\..\src\asio_timer.cpp" />
     <ClCompile Include="..\..\..\src\io_service.cpp" />
+    <ClCompile Include="..\..\..\src\timer.cpp" />
     <ClCompile Include="TestAsio.cpp" />
   </ItemGroup>
   <ItemGroup>

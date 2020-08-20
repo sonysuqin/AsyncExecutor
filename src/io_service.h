@@ -4,6 +4,7 @@
 #include <future>
 #include <memory>
 #include <thread>
+#include <unordered_map>
 
 #include "function_view.h"
 #include "timer.h"
@@ -77,7 +78,7 @@ class IOService {
   // Start io_service thread and run loop.
   bool Start();
 
-  // Stop io_service thread and run loop.
+  // Stop io_service thread and run loop, never stop thread in thread itself.
   bool Stop();
 
   // Return if current thread is the io_service thread.
@@ -115,10 +116,11 @@ class IOService {
     PostInternal(functor_wrapper);
   }
 
-  // Create a timer bound to this io_service, but IOService doesn't
-  // own the timer, make sure the timer be closed before IOService
-  // stopped.
-  std::shared_ptr<Timer> CreateTimer();
+  // Create a timer bound to this io_service, return timer id.
+  uint64_t OpenTimer(int timeout, bool repeat, Timer::TimerCallback callback);
+
+  // Close a timer created by OpenTimer.
+  void CloseTimer(uint64_t id);
 
  protected:
   void SetCurrent();
@@ -129,6 +131,8 @@ class IOService {
   std::shared_ptr<boost::asio::io_service> ios_;
   std::shared_ptr<boost::asio::io_service_work> work_;
   std::shared_ptr<std::thread> thread_;
+  std::recursive_mutex mutex_;
+  std::unordered_map<uint64_t, std::shared_ptr<Timer>> timer_table_;
   volatile std::atomic_bool running_;
   static thread_local IOService* self_;
 };
