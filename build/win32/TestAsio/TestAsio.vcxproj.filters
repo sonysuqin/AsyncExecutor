@@ -24,7 +24,7 @@
     <ClCompile Include="..\..\..\src\asio_timer.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\timer.cpp">
+    <ClCompile Include="..\..\..\src\beast_websocket.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
@@ -39,6 +39,21 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\asio_timer.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\websocket.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\bee_define.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\beast_websocket.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\timer_factory.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\websocket_factory.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

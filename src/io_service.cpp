@@ -1,16 +1,16 @@
 ﻿#include "io_service.h"
 #include "asio_timer.h"
-
-#include <boost/asio/io_service.hpp>
+#include "beast_websocket.h"
+#include "boost/asio/io_context.hpp"
 
 namespace boost {
 namespace asio {
 // This class is only used for hidding boost headers.
-class io_service_work : public io_service::work {
+class io_service_work : public io_context::work {
  public:
   explicit io_service_work(boost::asio::io_context& io_context)
-      : io_service::work(io_context) {}
-  io_service_work(const io_service_work& other) : io_service::work(other) {}
+      : io_context::work(io_context) {}
+  io_service_work(const io_service_work& other) : io_context::work(other) {}
 };
 }  // namespace asio
 }  // namespace boost
@@ -28,19 +28,18 @@ IOService::~IOService() {
 bool IOService::Start() {
   bool ret = true;
   do {
-    std::lock_guard<std::recursive_mutex> lock(mutex_);
     if (running_) {
       break;
     }
 
-    // Create io_service.
-    ios_.reset(new boost::asio::io_service);
-    // Create io_service_work to keep io_service running.
-    work_.reset(new boost::asio::io_service_work(*ios_));
-    // Create thread for io_service run().
-    thread_.reset(new std::thread([this] { ios_->run(); }));
+    // Create io_context.
+    ioc_.reset(new boost::asio::io_context);
+    // Create io_service_work to keep io_context running.
+    work_.reset(new boost::asio::io_service_work(*ioc_));
+    // Create thread for io_context run().
+    thread_.reset(new std::thread([this] { ioc_->run(); }));
     // Set TLS for current thread flag.
-    ios_->post([this] { SetCurrent(); });
+    ioc_->post([this] { SetCurrent(); });
     // Now IOService is indeed running.
     running_ = true;
   } while (0);
@@ -50,10 +49,12 @@ bool IOService::Start() {
 bool IOService::Stop() {
   bool ret = true;
   do {
-    std::lock_guard<std::recursive_mutex> lock(mutex_);
     if (!running_) {
       break;
     }
+
+    // For getting rid of memory leak from openssl.
+    InvokeInternal([this] { OPENSSL_thread_stop(); });
 
     // From this time on, no new invoke is allowed.
     running_ = false;
@@ -61,7 +62,7 @@ bool IOService::Stop() {
     // Stop run() loop, no run() will be called again.
     work_.reset();
     // Interrupt current run().
-    ios_->stop();
+    ioc_->stop();
 
     // Join the thread until it stopped.
     if (thread_ != nullptr && !IsCurrent()) {
@@ -69,16 +70,8 @@ bool IOService::Stop() {
       thread_.reset();
     }
 
-    // Clear all timers before ios destroyed.
-    if (!timer_table_.empty()) {
-      for (auto timer : timer_table_) {
-        timer.second->Close();
-      }
-      timer_table_.clear();
-    }
-
     // Delete ios.
-    ios_.reset();
+    ioc_.reset();
   } while (0);
   return ret;
 }
@@ -91,27 +84,18 @@ bool IOService::IsCurrent() {
   return self_ == this;
 }
 
-uint64_t IOService::OpenTimer(int timeout,
-                              bool repeat,
-                              Timer::TimerCallback callback) {
-  uint64_t id = 0;
-  InvokeInternal([this, timeout, repeat, callback, &id] {
-    auto timer = std::make_shared<AsioTimer>(*ios_);
-    id = timer->GetId();
-    timer_table_[id] = timer;
-    timer->Open(timeout, repeat, callback);
-  });
-  return id;
+std::shared_ptr<Timer> IOService::CreateTimer() {
+  if (!running_ || ioc_ == nullptr) {
+    return nullptr;
+  }
+  return std::make_shared<AsioTimer>(*ioc_);
 }
 
-void IOService::CloseTimer(uint64_t id) {
-  InvokeInternal([this, id] {
-    auto iter = timer_table_.find(id);
-    if (iter != timer_table_.end()) {
-      iter->second->Close();
-      timer_table_.erase(iter);
-    }
-  });
+std::shared_ptr<WebSocket> IOService::CreateWebSocket() {
+  if (!running_ || ioc_ == nullptr) {
+    return nullptr;
+  }
+  return std::make_shared<BeastWebSocket>(*ioc_);
 }
 
 void IOService::InvokeInternal(FunctionView<void()> functor) {
@@ -120,9 +104,8 @@ void IOService::InvokeInternal(FunctionView<void()> functor) {
   if (IsCurrent()) {
     functor_wrapper->run();
   } else {
-    std::lock_guard<std::recursive_mutex> lock(mutex_);
-    if (running_ && ios_ != nullptr) {
-      ios_->post([functor_wrapper] { functor_wrapper->run(); });
+    if (running_ && ioc_ != nullptr) {
+      ioc_->post([functor_wrapper] { functor_wrapper->run(); });
       posted = true;
     }
   }
@@ -132,9 +115,8 @@ void IOService::InvokeInternal(FunctionView<void()> functor) {
 }
 
 void IOService::PostInternal(std::shared_ptr<FunctorWrapper> functor_wrapper) {
-  std::lock_guard<std::recursive_mutex> lock(mutex_);
-  if (running_ && ios_ != nullptr && functor_wrapper != nullptr) {
-    ios_->post([functor_wrapper] { functor_wrapper->run(); });
+  if (running_ && ioc_ != nullptr && functor_wrapper != nullptr) {
+    ioc_->post([functor_wrapper] { functor_wrapper->run(); });
   }
 }
 

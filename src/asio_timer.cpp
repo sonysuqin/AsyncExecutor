@@ -2,12 +2,12 @@
 
 namespace bee {
 
-AsioTimer::AsioTimer(boost::asio::io_service& ios)
+AsioTimer::AsioTimer(boost::asio::io_context& ios)
     : steady_timer_(ios), is_closed_(false), timeout_(0), repeat_(false) {}
 
 AsioTimer::~AsioTimer() {}
 
-void AsioTimer::Open(int timeout, bool repeat, TimerCallback callback) {
+void AsioTimer::Open(int32_t timeout, bool repeat, TimerCallback callback) {
   if (!is_closed_ && timeout > 0) {
     timeout_ = timeout;
     repeat_ = repeat;

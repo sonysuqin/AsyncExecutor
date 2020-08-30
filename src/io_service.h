@@ -7,12 +7,14 @@
 #include <unordered_map>
 
 #include "function_view.h"
-#include "timer.h"
+#include "timer_factory.h"
+#include "websocket.h"
+#include "websocket_factory.h"
 
 // Forward declaration for hiding boost headers.
 namespace boost {
 namespace asio {
-typedef class io_context io_service;
+class io_context;
 class io_service_work;
 }  // namespace asio
 }  // namespace boost
@@ -44,14 +46,14 @@ class FunctorInvoker : public FunctorWrapper {
     promise_.set_value(0);
   }
 
-  int wait() {
-    std::future<int> future = promise_.get_future();
+  int32_t wait() {
+    std::future<int32_t> future = promise_.get_future();
     return future.get();
   }
 
  private:
   FunctionView<void()> functor_;
-  std::promise<int> promise_;
+  std::promise<int32_t> promise_;
 };
 
 // Functor wrapper for async post.
@@ -68,27 +70,32 @@ class FunctorPost : public FunctorWrapper {
   typename std::remove_reference<FunctorT>::type functor_;
 };
 
-// This class makes use of boost asio io_service, but hide all boost context.
-class IOService {
+// This class makes use of boost asio io_context, but hide all boost context.
+// Note that all io objects created from IOService such as timer and websocket
+// must be closed and deleted before IOService is deleted, for they depend on
+// io_context from IOService.
+class IOService : public std::enable_shared_from_this<IOService>,
+                  public TimerFactory,
+                  public WebSocketFactory {
  public:
   IOService();
   ~IOService();
 
  public:
-  // Start io_service thread and run loop.
+  // Start io_context thread and run loop.
   bool Start();
 
-  // Stop io_service thread and run loop, never stop thread in thread itself.
+  // Stop io_context thread and run loop, never stop thread in thread itself.
   bool Stop();
 
-  // Return if current thread is the io_service thread.
+  // Return if current thread is the io_context thread.
   bool IsCurrent();
 
-  // Return if io_service thread running.
+  // Return if io_context thread running.
   bool Running() { return running_; }
 
   // Sync call a method |functor| with a return value, the |functor|
-  // will be executed on io_service thread.
+  // will be executed on io_context thread.
   template <
       class ReturnT,
       typename = typename std::enable_if<!std::is_void<ReturnT>::value>::type>
@@ -99,7 +106,7 @@ class IOService {
   }
 
   // Sync call a method |functor| without return value, the |functor|
-  // will be executed on io_service thread.
+  // will be executed on io_context thread.
   template <
       class ReturnT,
       typename = typename std::enable_if<std::is_void<ReturnT>::value>::type>
@@ -107,7 +114,7 @@ class IOService {
     InvokeInternal(functor);
   }
 
-  // Post a task |functor| to io_service thread and return immediately.
+  // Post a task |functor| to io_context thread and return immediately.
   template <class FunctorT>
   void PostTask(FunctorT&& functor) {
     FunctorWrapper* p =
@@ -116,11 +123,11 @@ class IOService {
     PostInternal(functor_wrapper);
   }
 
-  // Create a timer bound to this io_service, return timer id.
-  uint64_t OpenTimer(int timeout, bool repeat, Timer::TimerCallback callback);
+  // TimerFactory implementation.
+  std::shared_ptr<Timer> CreateTimer() override;
 
-  // Close a timer created by OpenTimer.
-  void CloseTimer(uint64_t id);
+  // WebSocketFactory implementation.
+  std::shared_ptr<WebSocket> CreateWebSocket() override;
 
  protected:
   void SetCurrent();
@@ -128,11 +135,9 @@ class IOService {
   void PostInternal(std::shared_ptr<FunctorWrapper> functor_wrapper);
 
  protected:
-  std::shared_ptr<boost::asio::io_service> ios_;
+  std::shared_ptr<boost::asio::io_context> ioc_;
   std::shared_ptr<boost::asio::io_service_work> work_;
   std::shared_ptr<std::thread> thread_;
-  std::recursive_mutex mutex_;
-  std::unordered_map<uint64_t, std::shared_ptr<Timer>> timer_table_;
   volatile std::atomic_bool running_;
   static thread_local IOService* self_;
 };

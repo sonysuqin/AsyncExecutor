@@ -18,7 +18,7 @@
 
 using namespace bee;
 
-IOService* executor = new IOService;
+std::shared_ptr<IOService> executor(new IOService());
 
 long GetTid() {
   std::ostringstream oss;
@@ -67,9 +67,33 @@ void test1() {
   executor->PostTask(std::bind(&test2));
 }
 
+std::shared_ptr<WebSocket> ws;
+
+class WsSink : public WebSocketSink {
+ public:
+  virtual void OnOpen() {
+    printf("OnOpen\n");
+    executor->PostTask([] {
+      std::string msg =
+          "{\"cmd\":\"create\",\"roomid\":\"3866b18782bdd9f82a201801a06df2bba7a2ec865a54b5d30ab18adf\",\"uid\":\"11\"}";
+      ws->Send(msg.c_str(), msg.size());
+    });
+  }
+
+  virtual void OnData(const char* buffer, size_t size) {
+    printf("OnData %u\n", size);
+  }
+
+  virtual void OnClose() { printf("OnClose\n"); }
+
+  virtual void OnError(int32_t error_code, const std::string& error_message) {
+    printf("OnError %d %s\n", error_code, error_message.c_str());
+  }
+};
+
 int main() {
   printf("[Main:%ld] Main thread.\n", GetTid());
-  while (1) {
+  while (0) {
     executor->Start();
     printf("started\n");
     getchar();
@@ -85,14 +109,39 @@ int main() {
       printf("Test %d\n", index);
     }
 
-    uint64_t timer = executor->OpenTimer(
+    auto timer = executor->CreateTimer();
+    timer->Open(
         100, true, [] { printf("[Exector:%ld] haha\n", GetTid()); });
 
     executor->Invoke<void>(std::bind(&test1));
     getchar();
+    timer->Close();
+    timer = nullptr;
     executor->Stop();
     printf("stopped\n");
-    getchar();
+    char c = getchar();
+    if (c == 'q') {
+      break;
+    }
   }
+
+  executor->Start();
+  ws = executor->CreateWebSocket();
+  auto sink = std::make_shared<WsSink>();
+  ws->Open("ws://name.hd.sohu.com/bee_msg_media", std::vector<std::string>(),
+           sink);
+
+  //getchar();
+  printf("Press enter to close.\n");
+  getchar();
+  ws->Close();
+  ws = nullptr;
+  printf("Closed, press enter to continue.\n");
+  //getchar();
+  sink = nullptr;
+  executor->Stop();
+  executor = nullptr;
+  printf("About to exit.\n");
+  getchar();
   return 0;
 }
