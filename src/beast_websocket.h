@@ -1,5 +1,5 @@
-﻿#ifndef __BEAST_WEBSOCKET_H__
-#define __BEAST_WEBSOCKET_H__
+﻿#ifndef BEE_BEAST_WEBSOCKET_H
+#define BEE_BEAST_WEBSOCKET_H
 
 #include <future>
 
@@ -27,7 +27,7 @@ static const int32_t kDefaultWebSocketCloseTimeout = 1000;
 class BeastWebSocket : public WebSocket,
                        public std::enable_shared_from_this<BeastWebSocket> {
  public:
-  BeastWebSocket(boost::asio::io_context& ioc);
+  BeastWebSocket(std::shared_ptr<boost::asio::io_context> ioc);
   ~BeastWebSocket() override;
 
  public:
@@ -112,6 +112,7 @@ class BeastWebSocket : public WebSocket,
 
   enum CloseMode { CLOSE_MODE_SYNC_CLOSE, CLOSE_MODE_ASYNC_CLOSE };
 
+  std::shared_ptr<boost::asio::io_context> ioc_;
   tcp::resolver resolver_;
   websocket::stream<beast::tcp_stream> ws_;
   ssl::context ssl_context_;
@@ -235,4 +236,4 @@ void BeastWebSocket::ForceClose(WsType& ws) {
 
 }  // namespace bee
 
-#endif  // __BEAST_WEBSOCKET_H__
+#endif  // BEE_BEAST_WEBSOCKET_H

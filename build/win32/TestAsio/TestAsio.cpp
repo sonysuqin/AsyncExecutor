@@ -18,7 +18,8 @@
 
 using namespace bee;
 
-std::shared_ptr<IOService> executor(new IOService());
+std::shared_ptr<HttpEngine> http_engine(new HttpEngine);
+std::shared_ptr<IOService> executor(new IOService(http_engine));
 
 long GetTid() {
   std::ostringstream oss;
@@ -91,6 +92,64 @@ class WsSink : public WebSocketSink {
   }
 };
 
+std::shared_ptr<Http> http;
+
+class HttpSink : public HttpCallback {
+ public:
+  // virtual functions.
+  virtual void OnRedirectReceived(Cronet_UrlRequestPtr request,
+                                  Cronet_UrlResponseInfoPtr info,
+                                  Cronet_String newLocationUrl) {
+    printf("OnRedirectReceived %s\n", newLocationUrl);
+    http->FollowRedirect();
+  }
+
+  virtual void OnResponseStarted(Cronet_UrlRequestPtr request,
+                                 Cronet_UrlResponseInfoPtr info) {
+    std::cout << "OnResponseStarted called." << std::endl;
+    std::cout << "HTTP Status: "
+              << Cronet_UrlResponseInfo_http_status_code_get(info) << " "
+              << Cronet_UrlResponseInfo_http_status_text_get(info) << std::endl;
+    // Create and allocate 32kb buffer.
+    Cronet_BufferPtr buffer = Cronet_Buffer_Create();
+    Cronet_Buffer_InitWithAlloc(buffer, 32 * 1024);
+    // Started reading the response.
+    http->Read(buffer);
+  }
+
+  virtual void OnReadCompleted(Cronet_UrlRequestPtr request,
+                               Cronet_UrlResponseInfoPtr info,
+                               Cronet_BufferPtr buffer,
+                               uint64_t bytes_read) {
+    printf("Receive %llu bytes\n", bytes_read);
+    std::string last_read_data(
+        reinterpret_cast<char*>(Cronet_Buffer_GetData(buffer)),
+        (size_t)bytes_read);
+    data_ += last_read_data;
+    http->Read(buffer);
+  }
+
+  virtual void OnSucceeded(Cronet_UrlRequestPtr request,
+                           Cronet_UrlResponseInfoPtr info) {
+    std::cout << "OnSucceeded called." << std::endl;
+    printf("Http response:%s\n", data_.c_str());
+  }
+
+  virtual void OnFailed(Cronet_UrlRequestPtr request,
+                        Cronet_UrlResponseInfoPtr info,
+                        Cronet_ErrorPtr error) {
+    std::cout << "OnFailed called: " << Cronet_Error_message_get(error)
+              << std::endl;
+  }
+
+  virtual void OnCanceled(Cronet_UrlRequestPtr request,
+                          Cronet_UrlResponseInfoPtr info) {
+    std::cout << "OnCanceled called." << std::endl;
+  }
+
+  std::string data_;
+};
+
 int main() {
   printf("[Main:%ld] Main thread.\n", GetTid());
   while (0) {
@@ -136,11 +195,19 @@ int main() {
   getchar();
   ws->Close();
   ws = nullptr;
-  printf("Closed, press enter to continue.\n");
-  //getchar();
   sink = nullptr;
-  executor->Stop();
-  executor = nullptr;
+  printf("Ws closed, press enter to continue.\n");
+  getchar();
+
+  http = executor->CreateHttp();
+  auto http_sink = std::make_shared<HttpSink>();
+  http->Get("http://roblin.cn/video/qyn/33.mp4", http_sink);
+  getchar();
+  http->Close();
+  printf("Http closed, press enter to continue.\n");
+  getchar();
+  //executor->Stop();
+  //executor = nullptr;
   printf("About to exit.\n");
   getchar();
   return 0;

@@ -4,11 +4,12 @@
 
 namespace bee {
 
-BeastWebSocket::BeastWebSocket(boost::asio::io_context& ioc)
-    : resolver_(net::make_strand(ioc)),
-      ws_(net::make_strand(ioc)),
+BeastWebSocket::BeastWebSocket(std::shared_ptr<boost::asio::io_context> ioc)
+    : ioc_(ioc),
+      resolver_(net::make_strand(*ioc)),
+      ws_(net::make_strand(*ioc)),
       ssl_context_({ssl::context::sslv23_client}),
-      wss_(net::make_strand(ioc), ssl_context_) {
+      wss_(net::make_strand(*ioc), ssl_context_) {
   printf("BeastWebSocket created\n");
 }
 

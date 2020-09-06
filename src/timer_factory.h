@@ -1,5 +1,5 @@
-﻿#ifndef __TIMER_FACTORY_H__
-#define __TIMER_FACTORY_H__
+﻿#ifndef BEE_TIMER_FACTORY_H
+#define BEE_TIMER_FACTORY_H
 
 #include <memory>
 
@@ -14,4 +14,4 @@ class TimerFactory {
 
 }  // namespace bee
 
-#endif  // __TIMER_FACTORY_H__
+#endif  // BEE_TIMER_FACTORY_H

@@ -1,5 +1,5 @@
-﻿#ifndef __WEBSOCKET_FACTORY_H__
-#define __WEBSOCKET_FACTORY_H__
+﻿#ifndef BEE_WEBSOCKET_FACTORY_H
+#define BEE_WEBSOCKET_FACTORY_H
 
 #include <memory>
 
@@ -14,4 +14,4 @@ class WebSocketFactory {
 
 }  // namespace bee
 
-#endif  // __WEBSOCKET_FACTORY_H__
+#endif  // BEE_WEBSOCKET_FACTORY_H

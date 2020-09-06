@@ -1,5 +1,5 @@
-﻿#ifndef __ASIO_TIMER_H__
-#define __ASIO_TIMER_H__
+﻿#ifndef BEE_ASIO_TIMER_H
+#define BEE_ASIO_TIMER_H
 
 #include <atomic>
 #include <memory>
@@ -13,7 +13,7 @@ namespace bee {
 // Timer based on asio steady timer, MUST be closed before IOService stopped.
 class AsioTimer : public Timer, public std::enable_shared_from_this<AsioTimer> {
  public:
-  AsioTimer(boost::asio::io_context& ios);
+  AsioTimer(std::shared_ptr<boost::asio::io_context> ioc);
   ~AsioTimer() override;
 
  public:
@@ -24,6 +24,7 @@ class AsioTimer : public Timer, public std::enable_shared_from_this<AsioTimer> {
   void OnTimer();
 
  private:
+  std::shared_ptr<boost::asio::io_context> ioc_;
   boost::asio::steady_timer steady_timer_;
   std::atomic<bool> is_closed_;
   int32_t timeout_;
@@ -33,4 +34,4 @@ class AsioTimer : public Timer, public std::enable_shared_from_this<AsioTimer> {
 
 }  // namespace bee
 
-#endif  // __ASIO_TIMER_H__
+#endif  // BEE_ASIO_TIMER_H

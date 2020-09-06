@@ -1,5 +1,5 @@
-﻿#ifndef __TIMER_H__
-#define __TIMER_H__
+﻿#ifndef BEE_TIMER_H
+#define BEE_TIMER_H
 
 #include <functional>
 
@@ -22,4 +22,4 @@ class Timer {
 
 }  // namespace bee
 
-#endif  // __TIMER_H__
+#endif  // BEE_TIMER_H

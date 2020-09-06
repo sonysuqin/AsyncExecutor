@@ -1,6 +1,7 @@
 ﻿#include "io_service.h"
 #include "asio_timer.h"
 #include "beast_websocket.h"
+#include "bee_define.h"
 #include "boost/asio/io_context.hpp"
 
 namespace boost {
@@ -17,9 +18,12 @@ class io_service_work : public io_context::work {
 
 namespace bee {
 
+const char kUserAgent[] = "Roblin";
+
 thread_local IOService* IOService::self_ = nullptr;
 
-IOService::IOService() : running_(false) {}
+IOService::IOService(std::shared_ptr<HttpEngine> http_engine)
+    : http_engine_(http_engine), running_(false) {}
 
 IOService::~IOService() {
   Stop();
@@ -34,12 +38,16 @@ bool IOService::Start() {
 
     // Create io_context.
     ioc_.reset(new boost::asio::io_context);
+
     // Create io_service_work to keep io_context running.
     work_.reset(new boost::asio::io_service_work(*ioc_));
+
     // Create thread for io_context run().
     thread_.reset(new std::thread([this] { ioc_->run(); }));
-    // Set TLS for current thread flag.
-    ioc_->post([this] { SetCurrent(); });
+
+    // InitCurrentThread in thread when start running.
+    ioc_->post([this] { InitCurrentThread(); });
+
     // Now IOService is indeed running.
     running_ = true;
   } while (0);
@@ -53,14 +61,15 @@ bool IOService::Stop() {
       break;
     }
 
-    // For getting rid of memory leak from openssl.
-    InvokeInternal([this] { OPENSSL_thread_stop(); });
+    // UnInitCurrentThread in thread before thread exits.
+    InvokeInternal([this] { UnInitCurrentThread(); });
 
     // From this time on, no new invoke is allowed.
     running_ = false;
 
     // Stop run() loop, no run() will be called again.
     work_.reset();
+
     // Interrupt current run().
     ioc_->stop();
 
@@ -76,26 +85,56 @@ bool IOService::Stop() {
   return ret;
 }
 
-void IOService::SetCurrent() {
+void IOService::InitCurrentThread() {
   self_ = this;
+}
+
+void IOService::UnInitCurrentThread() {
+  OPENSSL_thread_stop();
 }
 
 bool IOService::IsCurrent() {
   return self_ == this;
 }
 
-std::shared_ptr<Timer> IOService::CreateTimer() {
-  if (!running_ || ioc_ == nullptr) {
+void IOService::ExecuteRunnable(Cronet_RunnablePtr runnable) {
+  if (running_ && ioc_ != nullptr) {
+    PostTask([runnable] {
+      Cronet_Runnable_Run(runnable);
+      Cronet_Runnable_Destroy(runnable);
+    });
+  } else {
+    Cronet_Runnable_Destroy(runnable);
+  }
+}
+
+void IOService::ExecuteFunction(std::function<void()> function) {
+  PostTask(function);
+}
+
+bool IOService::IsExecutorThread() {
+  return IsCurrent();
+}
+
+std::shared_ptr<Http> IOService::CreateHttp() {
+  if (!running_ || ioc_ == nullptr || http_engine_ == nullptr) {
     return nullptr;
   }
-  return std::make_shared<AsioTimer>(*ioc_);
+  return std::make_shared<Http>(http_engine_, shared_from_this());
 }
 
 std::shared_ptr<WebSocket> IOService::CreateWebSocket() {
   if (!running_ || ioc_ == nullptr) {
     return nullptr;
   }
-  return std::make_shared<BeastWebSocket>(*ioc_);
+  return std::make_shared<BeastWebSocket>(ioc_);
+}
+
+std::shared_ptr<Timer> IOService::CreateTimer() {
+  if (!running_ || ioc_ == nullptr) {
+    return nullptr;
+  }
+  return std::make_shared<AsioTimer>(ioc_);
 }
 
 void IOService::InvokeInternal(FunctionView<void()> functor) {

@@ -2,8 +2,12 @@
 
 namespace bee {
 
-AsioTimer::AsioTimer(boost::asio::io_context& ios)
-    : steady_timer_(ios), is_closed_(false), timeout_(0), repeat_(false) {}
+AsioTimer::AsioTimer(std::shared_ptr<boost::asio::io_context> ioc)
+    : ioc_(ioc),
+      steady_timer_(*ioc),
+      is_closed_(false),
+      timeout_(0),
+      repeat_(false) {}
 
 AsioTimer::~AsioTimer() {}
 

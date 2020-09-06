@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="..\..\..\src\asio_timer.cpp" />
     <ClCompile Include="..\..\..\src\beast_websocket.cpp" />
+    <ClCompile Include="..\..\..\src\http.cpp" />
     <ClCompile Include="..\..\..\src\io_service.cpp" />
     <ClCompile Include="TestAsio.cpp" />
   </ItemGroup>
@@ -29,6 +30,8 @@
     <ClInclude Include="..\..\..\src\beast_websocket.h" />
     <ClInclude Include="..\..\..\src\bee_define.h" />
     <ClInclude Include="..\..\..\src\function_view.h" />
+    <ClInclude Include="..\..\..\src\http.h" />
+    <ClInclude Include="..\..\..\src\http_factory.h" />
     <ClInclude Include="..\..\..\src\io_service.h" />
     <ClInclude Include="..\..\..\src\timer.h" />
     <ClInclude Include="..\..\..\src\timer_factory.h" />
@@ -108,15 +111,18 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;BOOST_ASIO_STANDALONE;_WIN32_WINNT=0x0A00;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>H:\work\open_source\boost_1_72_0;..\..\..\src;H:\work\bee_sdk\third_party\openssl\win32\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\src;H:\work\open_source\boost_1_72_0;H:\work\bee_sdk\third_party\openssl\win32\include;H:\google\chromium\src\components\cronet\native\include;H:\google\chromium\src\components\cronet\native\generated;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>H:\work\bee_sdk\third_party\openssl\win32\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>libssl.lib;libcrypto.lib;Crypt32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>H:\work\bee_sdk\third_party\openssl\win32\lib;H:\google\chromium\src\out\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libssl.lib;libcrypto.lib;Crypt32.lib;cronet.85.0.4183.83.dll.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PreBuildEvent>
+      <Command>copy H:\google\chromium\src\out\Release\cronet.85.0.4183.83.dll $(Configuration)\</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>

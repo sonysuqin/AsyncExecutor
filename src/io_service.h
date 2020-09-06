@@ -1,5 +1,5 @@
-﻿#ifndef __IO_SERVICE_H__
-#define __IO_SERVICE_H__
+﻿#ifndef BEE_IO_SERVICE_H
+#define BEE_IO_SERVICE_H
 
 #include <future>
 #include <memory>
@@ -7,6 +7,7 @@
 #include <unordered_map>
 
 #include "function_view.h"
+#include "http_factory.h"
 #include "timer_factory.h"
 #include "websocket.h"
 #include "websocket_factory.h"
@@ -73,12 +74,14 @@ class FunctorPost : public FunctorWrapper {
 // This class makes use of boost asio io_context, but hide all boost context.
 // Note that all io objects created from IOService such as timer and websocket
 // must be closed and deleted before IOService is deleted, for they depend on
-// io_context from IOService.
+// io_context of IOService.
 class IOService : public std::enable_shared_from_this<IOService>,
+                  public HttpExecutor,
+                  public HttpFactory,
                   public TimerFactory,
                   public WebSocketFactory {
  public:
-  IOService();
+  IOService(std::shared_ptr<HttpEngine> http_engine = nullptr);
   ~IOService();
 
  public:
@@ -123,25 +126,39 @@ class IOService : public std::enable_shared_from_this<IOService>,
     PostInternal(functor_wrapper);
   }
 
-  // TimerFactory implementation.
-  std::shared_ptr<Timer> CreateTimer() override;
+  // HttpExecutor implementation.
+  void ExecuteRunnable(Cronet_RunnablePtr runnable) override;
+
+  void ExecuteFunction(std::function<void()> function) override;
+
+  bool IsExecutorThread() override;
+
+  // HttpFactory implementation.
+  std::shared_ptr<Http> CreateHttp() override;
 
   // WebSocketFactory implementation.
   std::shared_ptr<WebSocket> CreateWebSocket() override;
 
+  // TimerFactory implementation.
+  std::shared_ptr<Timer> CreateTimer() override;
+
  protected:
-  void SetCurrent();
+  void InitCurrentThread();
+  void UnInitCurrentThread();
   void InvokeInternal(FunctionView<void()> functor);
   void PostInternal(std::shared_ptr<FunctorWrapper> functor_wrapper);
 
  protected:
   std::shared_ptr<boost::asio::io_context> ioc_;
-  std::shared_ptr<boost::asio::io_service_work> work_;
-  std::shared_ptr<std::thread> thread_;
+  std::unique_ptr<boost::asio::io_service_work> work_;
+  std::unique_ptr<std::thread> thread_;
+  // Expect all IOService objects hold a single global HttpEngine,
+  // so they can shared all cache, connection contexts, etc.
+  std::shared_ptr<HttpEngine> http_engine_;
   volatile std::atomic_bool running_;
   static thread_local IOService* self_;
 };
 
 }  // namespace bee
 
-#endif  // __IO_SERVICE_H__
+#endif  // BEE_IO_SERVICE_H

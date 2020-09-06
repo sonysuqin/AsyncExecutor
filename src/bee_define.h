@@ -1,5 +1,5 @@
-﻿#ifndef __BEE_DEFINE_H__
-#define __BEE_DEFINE_H__
+﻿#ifndef BEE_DEFINE_H
+#define BEE_DEFINE_H
 
 #ifdef WIN32
 #ifdef BEE_USE_AS_DLL
@@ -54,24 +54,29 @@
 
 /// 错误码.
 typedef enum BeeErrorCode {
-  kBeeErrorCode_Success = 0,         //!< 成功.
-  kBeeErrorCode_Invalid_Param,       //!< 非法参数.
-  kBeeErrorCode_Invalid_State,       //!< 非法状态.
-  kBeeErrorCode_Null_Pointer,        //!< 空指针.
-  kBeeErrorCode_Not_Implemented,     //!< 未实现.
-  kBeeErrorCode_Timeout,             //!< 超时.
-  kBeeErrorCode_Not_Connected,       //!< 未连接.
-  kBeeErrorCode_Error_Http_Status,   //!< 错误的Http状态码.
-  kBeeErrorCode_Error_Data,          //!< 错误数据.
-  kBeeErrorCode_Resolve_Fail,        //!< DNS解析失败.
-  kBeeErrorCode_Connect_Fail,        //!< 连接失败.
-  kBeeErrorCode_SSL_Handshake_Fail,  //!< SSL握手失败.
-  kBeeErrorCode_Ws_Handshake_Fail,   //!< WebSocket握手失败.
-  kBeeErrorCode_Write_Fail,          //!< 写数据失败.
-  kBeeErrorCode_Read_Fail,           //!< 读数据失败.
-  kBeeErrorCode_Crypto_Error,        //!< 加解密错误.
-  kBeeErrorCode_Not_Enough_Memory,   //!< 内存不足.
-  kBeeErrorCode_Count                //!< 错误码总数.
+  kBeeErrorCode_Success = 0,                    //!< 成功.
+  kBeeErrorCode_Invalid_Param,                  //!< 非法参数.
+  kBeeErrorCode_Invalid_State,                  //!< 非法状态.
+  kBeeErrorCode_Null_Pointer,                   //!< 空指针.
+  kBeeErrorCode_Not_Implemented,                //!< 未实现.
+  kBeeErrorCode_Timeout,                        //!< 超时.
+  kBeeErrorCode_Not_Connected,                  //!< 未连接.
+  kBeeErrorCode_Error_Http_Status,              //!< 错误的Http状态码.
+  kBeeErrorCode_Error_Data,                     //!< 错误数据.
+  kBeeErrorCode_Resolve_Fail,                   //!< DNS解析失败.
+  kBeeErrorCode_Connect_Fail,                   //!< 连接失败.
+  kBeeErrorCode_SSL_Handshake_Fail,             //!< SSL握手失败.
+  kBeeErrorCode_Ws_Handshake_Fail,              //!< WebSocket握手失败.
+  kBeeErrorCode_Write_Fail,                     //!< 写数据失败.
+  kBeeErrorCode_Read_Fail,                      //!< 读数据失败.
+  kBeeErrorCode_Crypto_Error,                   //!< 加解密错误.
+  kBeeErrorCode_Not_Enough_Memory,              //!< 内存不足.
+  kBeeErrorCode_Cronet_Engine_Start_Failed,     //!< Cronet引擎启动失败.
+  kBeeErrorCode_Cronet_Request_Init_Failed,     //!< Cronet请求初始化失败.
+  kBeeErrorCode_Cronet_Request_Start_Failed,    //!< Cronet请求启动失败.
+  kBeeErrorCode_Cronet_Request_Redirect_Failed, //!< Cronet请求重定向失败.
+  kBeeErrorCode_Cronet_Request_Read_Failed,     //!< Cronet请求读数据失败.
+  kBeeErrorCode_Count                           //!< 错误码总数.
 } BeeErrorCode;
 
 /// 平台类型.
@@ -99,4 +104,4 @@ typedef enum BeeNetType {
   kNetType_5G         //!< 5G网络.
 } BeeNetType;
 
-#endif  // __BEE_DEFINE_H__
+#endif  // BEE_DEFINE_H

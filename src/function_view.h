@@ -8,8 +8,8 @@
  *  be found in the AUTHORS file in the root of the source tree.
  */
 
-#ifndef API_FUNCTION_VIEW_H_
-#define API_FUNCTION_VIEW_H_
+#ifndef BEE_API_FUNCTION_VIEW_H
+#define BEE_API_FUNCTION_VIEW_H
 
 #include <type_traits>
 #include <utility>
@@ -126,4 +126,4 @@ class FunctionView<RetT(ArgT...)> final {
 
 }  // namespace bee
 
-#endif  // API_FUNCTION_VIEW_H_
+#endif  // BEE_API_FUNCTION_VIEW_H

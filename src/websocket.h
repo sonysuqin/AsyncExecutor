@@ -1,5 +1,5 @@
-﻿#ifndef __BEE_WEBSOCKET_H__
-#define __BEE_WEBSOCKET_H__
+﻿#ifndef BEE_WEBSOCKET_H
+#define BEE_WEBSOCKET_H
 
 #include <stdint.h>
 #include <string>
@@ -35,4 +35,4 @@ class WebSocket {
 
 }  // namespace bee
 
-#endif  // __BEE_WEBSOCKET_H__
+#endif  // BEE_WEBSOCKET_H
