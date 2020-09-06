@@ -111,17 +111,17 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;BOOST_ASIO_STANDALONE;_WIN32_WINNT=0x0A00;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>..\..\..\src;H:\work\open_source\boost_1_72_0;H:\work\bee_sdk\third_party\openssl\win32\include;H:\google\chromium\src\components\cronet\native\include;H:\google\chromium\src\components\cronet\native\generated;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\src;..\..\..\third_party\cronet\win32\include;..\..\..\third_party\openssl\win32\include;H:\work\open_source\boost_1_72_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>H:\work\bee_sdk\third_party\openssl\win32\lib;H:\google\chromium\src\out\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\..\third_party\cronet\win32\lib\Release;..\..\..\third_party\openssl\win32\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>libssl.lib;libcrypto.lib;Crypt32.lib;cronet.85.0.4183.83.dll.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PreBuildEvent>
-      <Command>copy H:\google\chromium\src\out\Release\cronet.85.0.4183.83.dll $(Configuration)\</Command>
+      <Command>copy ..\..\..\third_party\cronet\win32\lib\Release\cronet.85.0.4183.83.dll $(Configuration)\</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">

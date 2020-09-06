@@ -7,7 +7,7 @@
 #include <string>
 #include <vector>
 
-#include "cronet.idl_c.h"
+#include "cronet_c.h"
 
 namespace bee {
 
