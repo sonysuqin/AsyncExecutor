@@ -1,13 +1,15 @@
 ﻿#include <stdio.h>
+#include <chrono>
 #include <functional>
 #include <iostream>
 #include <sstream>
 #include <string>
 #include <thread>
-#include <chrono>
-#include <stdio.h>
 
 #include "io_service.h"
+
+#include "xlog/log/xlogger.h"
+#include "xlog/log/appender.h"
 
 #define LEAK_CHECK
 #ifdef LEAK_CHECK
@@ -15,6 +17,18 @@
 #include <vld.h>
 #endif
 #endif
+
+#ifdef UNIT_TEST
+
+#ifdef _DEBUG
+#pragma comment(lib, "gtestd.lib")
+#else
+#pragma comment(lib, "gtest.lib")
+#endif
+
+#include "gtest/gtest.h"
+
+#endif  // UNIT_TEST
 
 using namespace bee;
 
@@ -76,7 +90,9 @@ class WsSink : public WebSocketSink {
     printf("OnOpen\n");
     executor->PostTask([] {
       std::string msg =
-          "{\"cmd\":\"create\",\"roomid\":\"3866b18782bdd9f82a201801a06df2bba7a2ec865a54b5d30ab18adf\",\"uid\":\"11\"}";
+          "{\"cmd\":\"create\",\"roomid\":"
+          "\"3866b18782bdd9f82a201801a06df2bba7a2ec865a54b5d30ab18adf\","
+          "\"uid\":\"11\"}";
       ws->Send(msg.c_str(), msg.size());
     });
   }
@@ -150,7 +166,28 @@ class HttpSink : public HttpCallback {
   std::string data_;
 };
 
-int main() {
+unsigned long long getTid() {
+  std::ostringstream oss;
+  oss << std::this_thread::get_id();
+  std::string stid = oss.str();
+  unsigned long long tid = std::stoull(stid);
+  return tid;
+}
+
+class TestTls {
+ public:
+  TestTls() { printf("[%lld] TestTls created\n", getTid()); }
+  ~TestTls() { printf("[%lld] TestTls deleted\n", getTid()); }
+};
+
+class TlsContext {
+ public:
+    static thread_local TestTls test_tls;
+};
+
+thread_local TestTls TlsContext::test_tls;
+
+int main(int argc, char* argv[]) {
   printf("[Main:%ld] Main thread.\n", GetTid());
   while (0) {
     executor->Start();
@@ -169,8 +206,7 @@ int main() {
     }
 
     auto timer = executor->CreateTimer();
-    timer->Open(
-        100, true, [] { printf("[Exector:%ld] haha\n", GetTid()); });
+    timer->Open(100, true, [] { printf("[Exector:%ld] haha\n", GetTid()); });
 
     executor->Invoke<void>(std::bind(&test1));
     getchar();
@@ -184,31 +220,57 @@ int main() {
     }
   }
 
-  executor->Start();
-  ws = executor->CreateWebSocket();
-  auto sink = std::make_shared<WsSink>();
-  ws->Open("ws://name.hd.sohu.com/bee_msg_media", std::vector<std::string>(),
-           sink);
+  if (0) {
+    executor->Start();
+    ws = executor->CreateWebSocket();
+    auto sink = std::make_shared<WsSink>();
+    ws->Open("ws://name.hd.sohu.com/bee_msg_media", std::vector<std::string>(),
+             sink);
 
-  //getchar();
-  printf("Press enter to close.\n");
-  getchar();
-  ws->Close();
-  ws = nullptr;
-  sink = nullptr;
-  printf("Ws closed, press enter to continue.\n");
-  getchar();
+    // getchar();
+    printf("Press enter to close.\n");
+    getchar();
+    ws->Close();
+    ws = nullptr;
+    sink = nullptr;
+    printf("Ws closed, press enter to continue.\n");
+    getchar();
 
-  http = executor->CreateHttp();
-  auto http_sink = std::make_shared<HttpSink>();
-  http->Get("http://roblin.cn/video/qyn/33.mp4", http_sink);
-  getchar();
-  http->Close();
-  printf("Http closed, press enter to continue.\n");
-  getchar();
-  //executor->Stop();
-  //executor = nullptr;
+    http = executor->CreateHttp();
+    auto http_sink = std::make_shared<HttpSink>();
+    http->Get("http://roblin.cn/video/qyn/33.mp4", http_sink);
+    getchar();
+    http->Close();
+    printf("Http closed, press enter to continue.\n");
+    getchar();
+
+    // executor->Stop();
+    // executor = nullptr;
+  }
+
+#ifdef UNIT_TEST
+  testing::InitGoogleTest(&argc, argv);
+  RUN_ALL_TESTS();
+#endif
+
+  if (0) {
+    std::thread t1([] { printf("[%lld] thread1 in\n", getTid()); });
+
+    std::thread t2([] { printf("[%lld] thread2 in\n", getTid()); });
+  }
+
+  if (1) {
+      xlogger_SetLevel(kLevelDebug);
+      appender_set_console_log(true);
+      appender_open(kAppednerSync, "H:\\log\\roblin", "xlog_test", "");
+      for (int i = 0; i < 100; ++i) {
+        xinfo2("Hello %d", i);
+      }
+      appender_flush_sync();
+  }
+
   printf("About to exit.\n");
+
   getchar();
   return 0;
 }

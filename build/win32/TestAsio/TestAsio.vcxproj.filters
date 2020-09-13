@@ -13,6 +13,51 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="xlog">
+      <UniqueIdentifier>{35cebc54-b2b2-4110-9ddf-be7d84872b7d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="xlog\comm">
+      <UniqueIdentifier>{13ae6fcd-643c-4517-8828-282f42e40e4e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="xlog\crypt">
+      <UniqueIdentifier>{19e37a82-0611-439c-b495-5cd8c2ed79b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="xlog\log">
+      <UniqueIdentifier>{d1f0d8be-d438-4d13-be22-46d85384411e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="xlog\comm\assert">
+      <UniqueIdentifier>{69e6bccb-ff5d-45ae-886c-b983b121a954}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="xlog\comm\boost">
+      <UniqueIdentifier>{d8fcc572-9270-43de-827b-03dec2514974}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="xlog\comm\thread">
+      <UniqueIdentifier>{5766aa1d-1fc4-4cae-87d0-db02265aea95}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="xlog\comm\windows">
+      <UniqueIdentifier>{4480db94-c927-4ae9-adf7-10b58c534a9d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="xlog\comm\boost\filesystem">
+      <UniqueIdentifier>{13dc3163-772e-42f0-bd2e-4c4cb2fc1528}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="xlog\comm\boost\iostreams">
+      <UniqueIdentifier>{fecd7211-489a-4ac2-ac46-9f4260e43fb0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="xlog\comm\windows\sys">
+      <UniqueIdentifier>{df9230f6-e407-41a8-9a4c-421286361602}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="xlog\comm\windows\thread">
+      <UniqueIdentifier>{92b10a7f-0e15-40d3-a502-16e7acc2dfa9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="xlog\comm\windows\win32">
+      <UniqueIdentifier>{7c581e9a-3afe-495b-ab86-96096b3e3b83}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="xlog\comm\windows\zlib">
+      <UniqueIdentifier>{b3d85975-6fc8-4e00-92f9-4f50da53b04b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="xlog\crypt\micro-ecc-master">
+      <UniqueIdentifier>{058bd951-c32d-4095-8428-6a543242c0ba}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TestAsio.cpp">
@@ -29,6 +74,150 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\http.cpp">
       <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="io_service_unit_test.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\xlog\comm\autobuffer.cc">
+      <Filter>xlog\comm</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\xlog\comm\mmap_util.cc">
+      <Filter>xlog\comm</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\xlog\comm\ptrbuffer.cc">
+      <Filter>xlog\comm</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\xlog\comm\strutil.cc">
+      <Filter>xlog\comm</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\xlog\comm\tickcount.cc">
+      <Filter>xlog\comm</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\xlog\comm\time_utils.c">
+      <Filter>xlog\comm</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\xlog\comm\assert\__assert.c">
+      <Filter>xlog\comm\assert</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\xlog\comm\boost\filesystem\operations.cpp">
+      <Filter>xlog\comm\boost\filesystem</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\xlog\comm\boost\filesystem\path.cpp">
+      <Filter>xlog\comm\boost\filesystem</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\xlog\comm\boost\filesystem\path_traits.cpp">
+      <Filter>xlog\comm\boost\filesystem</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\xlog\comm\boost\filesystem\portability.cpp">
+      <Filter>xlog\comm\boost\filesystem</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\xlog\comm\boost\filesystem\unique_path.cpp">
+      <Filter>xlog\comm\boost\filesystem</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\xlog\comm\boost\filesystem\utf8_codecvt_facet.cpp">
+      <Filter>xlog\comm\boost\filesystem</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\xlog\comm\boost\filesystem\windows_file_codecvt.cpp">
+      <Filter>xlog\comm\boost\filesystem</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\xlog\comm\boost\filesystem\codecvt_error_category.cpp">
+      <Filter>xlog\comm\boost\filesystem</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\xlog\comm\boost\filesystem\directory.cpp">
+      <Filter>xlog\comm\boost\filesystem</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\xlog\comm\boost\filesystem\exception.cpp">
+      <Filter>xlog\comm\boost\filesystem</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\xlog\comm\boost\iostreams\mapped_file.cpp">
+      <Filter>xlog\comm\boost\iostreams</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\xlog\comm\windows\sys\time.c">
+      <Filter>xlog\comm\windows\sys</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\xlog\comm\windows\zlib\inftrees.c">
+      <Filter>xlog\comm\windows\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\xlog\comm\windows\zlib\trees.c">
+      <Filter>xlog\comm\windows\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\xlog\comm\windows\zlib\uncompr.c">
+      <Filter>xlog\comm\windows\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\xlog\comm\windows\zlib\zutil.c">
+      <Filter>xlog\comm\windows\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\xlog\comm\windows\zlib\adler32.c">
+      <Filter>xlog\comm\windows\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\xlog\comm\windows\zlib\compress.c">
+      <Filter>xlog\comm\windows\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\xlog\comm\windows\zlib\crc32.c">
+      <Filter>xlog\comm\windows\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\xlog\comm\windows\zlib\deflate.c">
+      <Filter>xlog\comm\windows\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\xlog\comm\windows\zlib\gzclose.c">
+      <Filter>xlog\comm\windows\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\xlog\comm\windows\zlib\gzlib.c">
+      <Filter>xlog\comm\windows\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\xlog\comm\windows\zlib\gzread.c">
+      <Filter>xlog\comm\windows\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\xlog\comm\windows\zlib\gzwrite.c">
+      <Filter>xlog\comm\windows\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\xlog\comm\windows\zlib\infback.c">
+      <Filter>xlog\comm\windows\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\xlog\comm\windows\zlib\inffast.c">
+      <Filter>xlog\comm\windows\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\xlog\comm\windows\zlib\inflate.c">
+      <Filter>xlog\comm\windows\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\xlog\comm\windows\unistd.c">
+      <Filter>xlog\comm\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\xlog\comm\windows\xlogger_threadinfo.cpp">
+      <Filter>xlog\comm\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\xlog\comm\windows\projdef.cc">
+      <Filter>xlog\comm\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\xlog\comm\windows\TssGC.cpp">
+      <Filter>xlog\comm\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\xlog\log\loginfo_extract.c">
+      <Filter>xlog\log</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\xlog\log\xloggerbase.c">
+      <Filter>xlog\log</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\xlog\log\appender.cc">
+      <Filter>xlog\log</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\xlog\log\formater.cc">
+      <Filter>xlog\log</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\xlog\log\log_buffer.cc">
+      <Filter>xlog\log</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\xlog\crypt\micro-ecc-master\uECC.c">
+      <Filter>xlog\crypt\micro-ecc-master</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\xlog\crypt\log_crypt.cc">
+      <Filter>xlog\crypt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\xlog\comm\windows\win32\NetUtil.cpp">
+      <Filter>xlog\comm\windows\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\xlog\comm\windows\win32\platform_comm.cpp">
+      <Filter>xlog\comm\windows\win32</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -65,5 +254,211 @@
     <ClInclude Include="..\..\..\src\http_factory.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\src\xlog\comm\time_utils.h">
+      <Filter>xlog\comm</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\xlog\comm\verinfo.h">
+      <Filter>xlog\comm</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\xlog\comm\autobuffer.h">
+      <Filter>xlog\comm</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\xlog\comm\bootrun.h">
+      <Filter>xlog\comm</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\xlog\comm\compiler_util.h">
+      <Filter>xlog\comm</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\xlog\comm\mmap_util.h">
+      <Filter>xlog\comm</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\xlog\comm\platform_comm.h">
+      <Filter>xlog\comm</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\xlog\comm\projdef.h">
+      <Filter>xlog\comm</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\xlog\comm\ptrbuffer.h">
+      <Filter>xlog\comm</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\xlog\comm\scope_recursion_limit.h">
+      <Filter>xlog\comm</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\xlog\comm\string_cast.h">
+      <Filter>xlog\comm</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\xlog\comm\strutil.h">
+      <Filter>xlog\comm</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\xlog\comm\tickcount.h">
+      <Filter>xlog\comm</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\xlog\comm\assert\__assert.h">
+      <Filter>xlog\comm\assert</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\xlog\comm\boost\filesystem\windows_file_codecvt.hpp">
+      <Filter>xlog\comm\boost\filesystem</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\xlog\comm\boost\filesystem\windows_tools.hpp">
+      <Filter>xlog\comm\boost\filesystem</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\xlog\comm\boost\filesystem\error_handling.hpp">
+      <Filter>xlog\comm\boost\filesystem</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\xlog\comm\windows\sys\time.h">
+      <Filter>xlog\comm\windows\sys</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\xlog\comm\windows\sys\cdefs.h">
+      <Filter>xlog\comm\windows\sys</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\xlog\comm\windows\thread\thread.h">
+      <Filter>xlog\comm\windows\thread</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\xlog\comm\windows\thread\tss.h">
+      <Filter>xlog\comm\windows\thread</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\xlog\comm\windows\thread\condition.h">
+      <Filter>xlog\comm\windows\thread</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\xlog\comm\windows\thread\lock.h">
+      <Filter>xlog\comm\windows\thread</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\xlog\comm\windows\thread\mutex.h">
+      <Filter>xlog\comm\windows\thread</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\xlog\comm\windows\win32\winhttp.h">
+      <Filter>xlog\comm\windows\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\xlog\comm\windows\win32\NetUtil.h">
+      <Filter>xlog\comm\windows\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\xlog\comm\windows\zlib\inftrees.h">
+      <Filter>xlog\comm\windows\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\xlog\comm\windows\zlib\trees.h">
+      <Filter>xlog\comm\windows\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\xlog\comm\windows\zlib\zconf.h">
+      <Filter>xlog\comm\windows\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\xlog\comm\windows\zlib\zlib.h">
+      <Filter>xlog\comm\windows\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\xlog\comm\windows\zlib\zutil.h">
+      <Filter>xlog\comm\windows\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\xlog\comm\windows\zlib\crc32.h">
+      <Filter>xlog\comm\windows\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\xlog\comm\windows\zlib\deflate.h">
+      <Filter>xlog\comm\windows\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\xlog\comm\windows\zlib\gzguts.h">
+      <Filter>xlog\comm\windows\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\xlog\comm\windows\zlib\inffast.h">
+      <Filter>xlog\comm\windows\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\xlog\comm\windows\zlib\inffixed.h">
+      <Filter>xlog\comm\windows\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\xlog\comm\windows\zlib\inflate.h">
+      <Filter>xlog\comm\windows\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\xlog\comm\windows\TssGC.h">
+      <Filter>xlog\comm\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\xlog\comm\windows\unistd.h">
+      <Filter>xlog\comm\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\xlog\comm\windows\dirent.h">
+      <Filter>xlog\comm\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\xlog\comm\windows\projdef.h">
+      <Filter>xlog\comm\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\xlog\comm\thread\mutexvector.h">
+      <Filter>xlog\comm\thread</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\xlog\comm\thread\runnable.h">
+      <Filter>xlog\comm\thread</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\xlog\comm\thread\spinlock.h">
+      <Filter>xlog\comm\thread</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\xlog\comm\thread\thread.h">
+      <Filter>xlog\comm\thread</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\xlog\comm\thread\tss.h">
+      <Filter>xlog\comm\thread</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\xlog\comm\thread\atomic_oper.h">
+      <Filter>xlog\comm\thread</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\xlog\comm\thread\condition.h">
+      <Filter>xlog\comm\thread</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\xlog\comm\thread\lock.h">
+      <Filter>xlog\comm\thread</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\xlog\comm\thread\mutex.h">
+      <Filter>xlog\comm\thread</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\xlog\log\log_buffer.h">
+      <Filter>xlog\log</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\xlog\log\loginfo_extract.h">
+      <Filter>xlog\log</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\xlog\log\preprocessor.h">
+      <Filter>xlog\log</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\xlog\log\xlogger.h">
+      <Filter>xlog\log</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\xlog\log\xloggerbase.h">
+      <Filter>xlog\log</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\xlog\log\android_xlog.h">
+      <Filter>xlog\log</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\xlog\log\appender.h">
+      <Filter>xlog\log</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\xlog\crypt\micro-ecc-master\uECC.h">
+      <Filter>xlog\crypt\micro-ecc-master</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\xlog\crypt\micro-ecc-master\uECC_vli.h">
+      <Filter>xlog\crypt\micro-ecc-master</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\xlog\crypt\micro-ecc-master\types.h">
+      <Filter>xlog\crypt\micro-ecc-master</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\xlog\crypt\log_crypt.h">
+      <Filter>xlog\crypt</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\src\xlog\crypt\micro-ecc-master\asm_arm.inc">
+      <Filter>xlog\crypt\micro-ecc-master</Filter>
+    </None>
+    <None Include="..\..\..\src\xlog\crypt\micro-ecc-master\asm_arm_mult_square.inc">
+      <Filter>xlog\crypt\micro-ecc-master</Filter>
+    </None>
+    <None Include="..\..\..\src\xlog\crypt\micro-ecc-master\asm_arm_mult_square_umaal.inc">
+      <Filter>xlog\crypt\micro-ecc-master</Filter>
+    </None>
+    <None Include="..\..\..\src\xlog\crypt\micro-ecc-master\asm_avr.inc">
+      <Filter>xlog\crypt\micro-ecc-master</Filter>
+    </None>
+    <None Include="..\..\..\src\xlog\crypt\micro-ecc-master\asm_avr_mult_square.inc">
+      <Filter>xlog\crypt\micro-ecc-master</Filter>
+    </None>
+    <None Include="..\..\..\src\xlog\crypt\micro-ecc-master\curve-specific.inc">
+      <Filter>xlog\crypt\micro-ecc-master</Filter>
+    </None>
+    <None Include="..\..\..\src\xlog\crypt\micro-ecc-master\platform-specific.inc">
+      <Filter>xlog\crypt\micro-ecc-master</Filter>
+    </None>
   </ItemGroup>
 </Project>

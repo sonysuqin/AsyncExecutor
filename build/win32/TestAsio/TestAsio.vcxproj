@@ -23,6 +23,54 @@
     <ClCompile Include="..\..\..\src\beast_websocket.cpp" />
     <ClCompile Include="..\..\..\src\http.cpp" />
     <ClCompile Include="..\..\..\src\io_service.cpp" />
+    <ClCompile Include="..\..\..\src\xlog\comm\assert\__assert.c" />
+    <ClCompile Include="..\..\..\src\xlog\comm\autobuffer.cc" />
+    <ClCompile Include="..\..\..\src\xlog\comm\boost\filesystem\codecvt_error_category.cpp" />
+    <ClCompile Include="..\..\..\src\xlog\comm\boost\filesystem\directory.cpp" />
+    <ClCompile Include="..\..\..\src\xlog\comm\boost\filesystem\exception.cpp" />
+    <ClCompile Include="..\..\..\src\xlog\comm\boost\filesystem\operations.cpp" />
+    <ClCompile Include="..\..\..\src\xlog\comm\boost\filesystem\path.cpp" />
+    <ClCompile Include="..\..\..\src\xlog\comm\boost\filesystem\path_traits.cpp" />
+    <ClCompile Include="..\..\..\src\xlog\comm\boost\filesystem\portability.cpp" />
+    <ClCompile Include="..\..\..\src\xlog\comm\boost\filesystem\unique_path.cpp" />
+    <ClCompile Include="..\..\..\src\xlog\comm\boost\filesystem\utf8_codecvt_facet.cpp" />
+    <ClCompile Include="..\..\..\src\xlog\comm\boost\filesystem\windows_file_codecvt.cpp" />
+    <ClCompile Include="..\..\..\src\xlog\comm\boost\iostreams\mapped_file.cpp" />
+    <ClCompile Include="..\..\..\src\xlog\comm\mmap_util.cc" />
+    <ClCompile Include="..\..\..\src\xlog\comm\ptrbuffer.cc" />
+    <ClCompile Include="..\..\..\src\xlog\comm\strutil.cc" />
+    <ClCompile Include="..\..\..\src\xlog\comm\tickcount.cc" />
+    <ClCompile Include="..\..\..\src\xlog\comm\time_utils.c" />
+    <ClCompile Include="..\..\..\src\xlog\comm\windows\projdef.cc" />
+    <ClCompile Include="..\..\..\src\xlog\comm\windows\sys\time.c" />
+    <ClCompile Include="..\..\..\src\xlog\comm\windows\TssGC.cpp" />
+    <ClCompile Include="..\..\..\src\xlog\comm\windows\unistd.c" />
+    <ClCompile Include="..\..\..\src\xlog\comm\windows\win32\NetUtil.cpp" />
+    <ClCompile Include="..\..\..\src\xlog\comm\windows\win32\platform_comm.cpp" />
+    <ClCompile Include="..\..\..\src\xlog\comm\windows\xlogger_threadinfo.cpp" />
+    <ClCompile Include="..\..\..\src\xlog\comm\windows\zlib\adler32.c" />
+    <ClCompile Include="..\..\..\src\xlog\comm\windows\zlib\compress.c" />
+    <ClCompile Include="..\..\..\src\xlog\comm\windows\zlib\crc32.c" />
+    <ClCompile Include="..\..\..\src\xlog\comm\windows\zlib\deflate.c" />
+    <ClCompile Include="..\..\..\src\xlog\comm\windows\zlib\gzclose.c" />
+    <ClCompile Include="..\..\..\src\xlog\comm\windows\zlib\gzlib.c" />
+    <ClCompile Include="..\..\..\src\xlog\comm\windows\zlib\gzread.c" />
+    <ClCompile Include="..\..\..\src\xlog\comm\windows\zlib\gzwrite.c" />
+    <ClCompile Include="..\..\..\src\xlog\comm\windows\zlib\infback.c" />
+    <ClCompile Include="..\..\..\src\xlog\comm\windows\zlib\inffast.c" />
+    <ClCompile Include="..\..\..\src\xlog\comm\windows\zlib\inflate.c" />
+    <ClCompile Include="..\..\..\src\xlog\comm\windows\zlib\inftrees.c" />
+    <ClCompile Include="..\..\..\src\xlog\comm\windows\zlib\trees.c" />
+    <ClCompile Include="..\..\..\src\xlog\comm\windows\zlib\uncompr.c" />
+    <ClCompile Include="..\..\..\src\xlog\comm\windows\zlib\zutil.c" />
+    <ClCompile Include="..\..\..\src\xlog\crypt\log_crypt.cc" />
+    <ClCompile Include="..\..\..\src\xlog\crypt\micro-ecc-master\uECC.c" />
+    <ClCompile Include="..\..\..\src\xlog\log\appender.cc" />
+    <ClCompile Include="..\..\..\src\xlog\log\formater.cc" />
+    <ClCompile Include="..\..\..\src\xlog\log\loginfo_extract.c" />
+    <ClCompile Include="..\..\..\src\xlog\log\log_buffer.cc" />
+    <ClCompile Include="..\..\..\src\xlog\log\xloggerbase.c" />
+    <ClCompile Include="io_service_unit_test.cpp" />
     <ClCompile Include="TestAsio.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -37,6 +85,76 @@
     <ClInclude Include="..\..\..\src\timer_factory.h" />
     <ClInclude Include="..\..\..\src\websocket.h" />
     <ClInclude Include="..\..\..\src\websocket_factory.h" />
+    <ClInclude Include="..\..\..\src\xlog\comm\assert\__assert.h" />
+    <ClInclude Include="..\..\..\src\xlog\comm\autobuffer.h" />
+    <ClInclude Include="..\..\..\src\xlog\comm\boost\filesystem\error_handling.hpp" />
+    <ClInclude Include="..\..\..\src\xlog\comm\boost\filesystem\windows_file_codecvt.hpp" />
+    <ClInclude Include="..\..\..\src\xlog\comm\boost\filesystem\windows_tools.hpp" />
+    <ClInclude Include="..\..\..\src\xlog\comm\bootrun.h" />
+    <ClInclude Include="..\..\..\src\xlog\comm\compiler_util.h" />
+    <ClInclude Include="..\..\..\src\xlog\comm\mmap_util.h" />
+    <ClInclude Include="..\..\..\src\xlog\comm\platform_comm.h" />
+    <ClInclude Include="..\..\..\src\xlog\comm\projdef.h" />
+    <ClInclude Include="..\..\..\src\xlog\comm\ptrbuffer.h" />
+    <ClInclude Include="..\..\..\src\xlog\comm\scope_recursion_limit.h" />
+    <ClInclude Include="..\..\..\src\xlog\comm\string_cast.h" />
+    <ClInclude Include="..\..\..\src\xlog\comm\strutil.h" />
+    <ClInclude Include="..\..\..\src\xlog\comm\thread\atomic_oper.h" />
+    <ClInclude Include="..\..\..\src\xlog\comm\thread\condition.h" />
+    <ClInclude Include="..\..\..\src\xlog\comm\thread\lock.h" />
+    <ClInclude Include="..\..\..\src\xlog\comm\thread\mutex.h" />
+    <ClInclude Include="..\..\..\src\xlog\comm\thread\mutexvector.h" />
+    <ClInclude Include="..\..\..\src\xlog\comm\thread\runnable.h" />
+    <ClInclude Include="..\..\..\src\xlog\comm\thread\spinlock.h" />
+    <ClInclude Include="..\..\..\src\xlog\comm\thread\thread.h" />
+    <ClInclude Include="..\..\..\src\xlog\comm\thread\tss.h" />
+    <ClInclude Include="..\..\..\src\xlog\comm\tickcount.h" />
+    <ClInclude Include="..\..\..\src\xlog\comm\time_utils.h" />
+    <ClInclude Include="..\..\..\src\xlog\comm\verinfo.h" />
+    <ClInclude Include="..\..\..\src\xlog\comm\windows\dirent.h" />
+    <ClInclude Include="..\..\..\src\xlog\comm\windows\projdef.h" />
+    <ClInclude Include="..\..\..\src\xlog\comm\windows\sys\cdefs.h" />
+    <ClInclude Include="..\..\..\src\xlog\comm\windows\sys\time.h" />
+    <ClInclude Include="..\..\..\src\xlog\comm\windows\thread\condition.h" />
+    <ClInclude Include="..\..\..\src\xlog\comm\windows\thread\lock.h" />
+    <ClInclude Include="..\..\..\src\xlog\comm\windows\thread\mutex.h" />
+    <ClInclude Include="..\..\..\src\xlog\comm\windows\thread\thread.h" />
+    <ClInclude Include="..\..\..\src\xlog\comm\windows\thread\tss.h" />
+    <ClInclude Include="..\..\..\src\xlog\comm\windows\TssGC.h" />
+    <ClInclude Include="..\..\..\src\xlog\comm\windows\unistd.h" />
+    <ClInclude Include="..\..\..\src\xlog\comm\windows\win32\NetUtil.h" />
+    <ClInclude Include="..\..\..\src\xlog\comm\windows\win32\winhttp.h" />
+    <ClInclude Include="..\..\..\src\xlog\comm\windows\zlib\crc32.h" />
+    <ClInclude Include="..\..\..\src\xlog\comm\windows\zlib\deflate.h" />
+    <ClInclude Include="..\..\..\src\xlog\comm\windows\zlib\gzguts.h" />
+    <ClInclude Include="..\..\..\src\xlog\comm\windows\zlib\inffast.h" />
+    <ClInclude Include="..\..\..\src\xlog\comm\windows\zlib\inffixed.h" />
+    <ClInclude Include="..\..\..\src\xlog\comm\windows\zlib\inflate.h" />
+    <ClInclude Include="..\..\..\src\xlog\comm\windows\zlib\inftrees.h" />
+    <ClInclude Include="..\..\..\src\xlog\comm\windows\zlib\trees.h" />
+    <ClInclude Include="..\..\..\src\xlog\comm\windows\zlib\zconf.h" />
+    <ClInclude Include="..\..\..\src\xlog\comm\windows\zlib\zlib.h" />
+    <ClInclude Include="..\..\..\src\xlog\comm\windows\zlib\zutil.h" />
+    <ClInclude Include="..\..\..\src\xlog\crypt\log_crypt.h" />
+    <ClInclude Include="..\..\..\src\xlog\crypt\micro-ecc-master\types.h" />
+    <ClInclude Include="..\..\..\src\xlog\crypt\micro-ecc-master\uECC.h" />
+    <ClInclude Include="..\..\..\src\xlog\crypt\micro-ecc-master\uECC_vli.h" />
+    <ClInclude Include="..\..\..\src\xlog\log\android_xlog.h" />
+    <ClInclude Include="..\..\..\src\xlog\log\appender.h" />
+    <ClInclude Include="..\..\..\src\xlog\log\loginfo_extract.h" />
+    <ClInclude Include="..\..\..\src\xlog\log\log_buffer.h" />
+    <ClInclude Include="..\..\..\src\xlog\log\preprocessor.h" />
+    <ClInclude Include="..\..\..\src\xlog\log\xlogger.h" />
+    <ClInclude Include="..\..\..\src\xlog\log\xloggerbase.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\src\xlog\crypt\micro-ecc-master\asm_arm.inc" />
+    <None Include="..\..\..\src\xlog\crypt\micro-ecc-master\asm_arm_mult_square.inc" />
+    <None Include="..\..\..\src\xlog\crypt\micro-ecc-master\asm_arm_mult_square_umaal.inc" />
+    <None Include="..\..\..\src\xlog\crypt\micro-ecc-master\asm_avr.inc" />
+    <None Include="..\..\..\src\xlog\crypt\micro-ecc-master\asm_avr_mult_square.inc" />
+    <None Include="..\..\..\src\xlog\crypt\micro-ecc-master\curve-specific.inc" />
+    <None Include="..\..\..\src\xlog\crypt\micro-ecc-master\platform-specific.inc" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
@@ -108,16 +226,17 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;BOOST_ASIO_STANDALONE;_WIN32_WINNT=0x0A00;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;BOOST_ASIO_STANDALONE;_WIN32_WINNT=0x0A00;UNIT_TEST;_CRT_SECURE_NO_WARNINGS;_WINSOCK_DEPRECATED_NO_WARNINGS;BOOST_ALL_NO_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>..\..\..\src;..\..\..\third_party\cronet\win32\include;..\..\..\third_party\openssl\win32\include;H:\work\open_source\boost_1_72_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\src;..\..\..\src\xlog\comm\windows;..\..\..\src\xlog\comm\windows\zlib;..\..\..\third_party\cronet\win32\include;..\..\..\third_party\openssl\win32\include;..\..\..\third_party\gtest\win32\include;H:\work\open_source\boost_1_72_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>..\..\..\third_party\cronet\win32\lib\Release;..\..\..\third_party\openssl\win32\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\..\third_party\cronet\win32\lib\Release;..\..\..\third_party\openssl\win32\lib;..\..\..\third_party\gtest\win32\lib\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>libssl.lib;libcrypto.lib;Crypt32.lib;cronet.85.0.4183.83.dll.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PreBuildEvent>
